@@ -8,6 +8,7 @@ const defaults = {
   schemaId: 'https://players.brightcove.net/{accountId}/{playerId}_{embedId}/index.html?videoId={id}',
   keywords: false,
   excludeTags: [],
+  includeClips: false,
   baseObject: {},
   includeEmbedUrl: true,
   preferLongDescription: false,
@@ -29,6 +30,8 @@ const defaults = {
  *           Whether to include tags as keywords
  * @param    {Array} [options.excludeTags]
  *           If including tags, an array of tags to exclude
+ * @param    {Boolean} [options.includeClips]
+ *           Whether to include clips within the hasPart array
  * @param    {Object} [options.baseObject]
  *           A template object to build the schema onto
  * @param    {boolean} [options.includeEmbedUrl]
@@ -109,6 +112,26 @@ const schema = function(options) {
 
       if (keywords.length > 0) {
         ld.keywords = keywords.join(',');
+      }
+    }
+
+    if (options.includeClips) {
+      const clips = [];
+
+      mediainfo.cue_points.forEach((clip) => {
+        if (clip.type === "CODE" ) {
+          var clipItem = {
+            '@type': 'Clip',
+            name: clip.name,
+            startOffset: clip.time,
+            url: ld.embedUrl + "&t=" + clip.time
+          }        
+          clips.push(clipItem);
+        }
+      });
+
+      if (clips.length > 0) {
+        ld.hasPart = clips;
       }
     }
 

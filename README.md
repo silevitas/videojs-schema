@@ -24,7 +24,19 @@ A plugin for the Brightcove Player to inject metadata from a Video Cloud video i
   "uploadDate":"2016-10-20",
   "@id":"http://players.brightcove.net/906043040001/5WnZb7ptr_default/index.html?videoId=ref:bunnyfull",
   "duration":"PT10M35S",
-  "embedUrl":"http://players.brightcove.net/906043040001/5WnZb7ptr_default/index.html?videoId=1401169490001"
+  "embedUrl":"http://players.brightcove.net/906043040001/5WnZb7ptr_default/index.html?videoId=1401169490001",
+  "hasPart": [{
+    "@type": "Clip",
+    "name": "Cat jumps",
+    "startOffset": 30,
+    "url": "http://players.brightcove.net/906043040001/5WnZb7ptr_default/index.html?videoId=1401169490001?t=30"
+  },
+  {
+    "@type": "Clip",
+    "name": "Cat misses the fence",
+    "startOffset": 60,
+    "url": "http://players.brightcove.net/906043040001/5WnZb7ptr_default/index.html?videoId=1401169490001?t=60"
+  }]
 }
 </script>
 ```
@@ -46,6 +58,8 @@ Defaults to `https://players.brightcove.net/{accountId}/{playerId}_{embedId}/ind
 `excludeTags` - array of tags to not include as keywords, e.g. `["youtubesync"]`
 
 `baseObject` - an option object of properties onto which to build the video specific metadata. For example this could be used to include a publisher object:
+
+`includeClips` - if `true`, includes a list of clips under a "hasPart" array, based on the CODE cue points within the video. Default is `false`.
 
 `includeEmbedUrl` - if `false`, no embed url is included. Inlcuding thisURL may be expected by search engines. Default is `true`.
 
