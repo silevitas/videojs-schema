@@ -60,16 +60,6 @@ Defaults to `https://players.brightcove.net/{accountId}/{playerId}_{embedId}/ind
 
 `baseObject` - an option object of properties onto which to build the video specific metadata. For example this could be used to include a publisher object:
 
-`includeClips` - if `true`, includes a list of clips under a "hasPart" array, based on the CODE cue points within the video. Default is `false`.
-
-`includeContentUrl` - if `true`, includes a direct URL to the highest MP4 rendition of the video. Be careful with short-expiry TTL URLs. Default is `false`.
-
-`includeEmbedUrl` - if `false`, no embed url is included. Inlcuding thisURL may be expected by search engines. Default is `true`.
-
-`transcript` - if `true`, a captions or subtitles track with a matching language will be added as a transcript. Default is `false`.
-
-`transcriptMatchAny` - if `true` and `transcript` is also `true`, a transcript will be added from the first usable track, if there is no language match. Default is `false`.
-
 ```json
 "baseObject": {
   "publisher": {
@@ -84,6 +74,16 @@ Defaults to `https://players.brightcove.net/{accountId}/{playerId}_{embedId}/ind
   }
 }
 ```
+
+`includeClips` - if `true`, includes a list of clips under a "hasPart" array, based on the CODE cue points within the video. Default is `false`. __POC; TESTS NEED TO BE ADDED.__
+
+`includeContentUrl` - if `true`, includes a direct URL to the highest MP4 rendition of the video. Be careful with short-expiry TTL URLs. Default is `false`. __POC; TESTS NEED TO BE ADDED.__
+
+`includeEmbedUrl` - if `false`, no embed url is included. Inlcuding thisURL may be expected by search engines. Default is `true`. 
+
+`transcript` - if `true`, a captions or subtitles track with a matching language will be added as a transcript. Default is `false`.
+
+`transcriptMatchAny` - if `true` and `transcript` is also `true`, a transcript will be added from the first usable track, if there is no language match. Default is `false`.
 
 `preferLongDescription` - if `true`, use the long description if available. If `false`, or `true` and long description is not set then the (short) description field will be used. Default is `false`.
 
