@@ -11,6 +11,7 @@ const defaults = {
   includeClips: false,
   baseObject: {},
   includeEmbedUrl: true,
+  includeContentUrl: false,
   preferLongDescription: false,
   transcript: false,
   transcriptMatchAny: false
@@ -32,6 +33,8 @@ const defaults = {
  *           If including tags, an array of tags to exclude
  * @param    {Boolean} [options.includeClips]
  *           Whether to include clips within the hasPart array
+ * @param    {Boolean} [options.includeContentUrl]
+ *           Whether to include a direct URL to an MP4 file. Be careful with expiring TTLs
  * @param    {Object} [options.baseObject]
  *           A template object to build the schema onto
  * @param    {boolean} [options.includeEmbedUrl]
@@ -133,6 +136,28 @@ const schema = function(options) {
       if (clips.length > 0) {
         ld.hasPart = clips;
       }
+    }
+
+    if (options.includeContentUrl) {
+        let mp4Array = [];
+        let rendtionsArray = mediainfo.sources;
+        let totalRenditions = rendtionsArray.length;
+
+        for (var i = 0; i < totalRenditions; i++) {
+          if (
+            rendtionsArray[i].container === "MP4" &&
+            rendtionsArray[i].hasOwnProperty("src")
+          ) {
+            mp4Array.push(rendtionsArray[i]);
+          }
+        }
+
+        mp4Array.sort(function (a, b) {
+          return b.size - a.size;
+        });
+
+        let highestQuality = mp4Array[0].src;
+        ld.contentUrl = highestQuality;
     }
 
     if (options.transcript) {
